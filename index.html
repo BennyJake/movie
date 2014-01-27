@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>metro-bootstrap: Twitter Bootstrap with Metro style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link rel="stylesheet" type="text/css" href="css/metro-bootstrap.css">
+    <!-- documentation styles -->
+    <link rel="stylesheet" type="text/css" href="docs/docs.css">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="js/jquery/jquery-1.10.2.min.js"></script>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map-canvas { height: 500px; }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXcK4lVIi5Rc6zsFZ238U0fdHbNhia0u0&sensor=false"></script>
+    <script type="text/javascript">
+
+        var latlng, lat, lng;
+
+        var zoom, address;
+
+        var moviearray;
+
+        var mapOptions, geocoder, map;
+
+        $(function() {
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            //getLocation();
+
+        });
+/*
+        $('#update-location').click(function(event){
+            event.preventDefault();
+            alert("Working?");
+            getLocation();
+        });
+*/
+        function getCenter(){
+            return map.getCenter();
+        }
+
+        function setCenter(){
+            map.setCenter(getLatLng());
+        }
+
+        function setLatLng(){
+            latlng = new google.maps.LatLng(lat,lng,false);
+        }
+
+        function getLatLng(){
+            return latlng;
+        }
+
+        function setLat(lat_new){
+            lat = lat_new;
+            if(!isNaN(lng)){
+                setLatLng();
+            }
+        }
+
+        function getLat(){
+            return lat;
+        }
+
+        function setLng(lng_new){
+            lng = lng_new;
+            if(!isNaN(lat)){
+                setLatLng();
+            }
+        }
+
+        function getLng(){
+            return lng;
+        }
+
+        function setZoom(newZoom){
+            map.setZoom(newZoom);
+        }
+
+        function getZoom(){
+            return map.getZoom();
+        }
+
+        function initialize() {
+
+            mapOptions = {
+                center: new google.maps.LatLng(-34.397, 150.644),
+                zoom: 8
+            };
+
+            geocoder = new google.maps.Geocoder();
+
+            map = new google.maps.Map(document.getElementById("map-canvas"),
+                    mapOptions);
+        }
+
+        function getLocation(){
+
+            //$('map-canvas').addClass('progress large');
+
+            var x = document.getElementById("movieinfo");
+
+            if (navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(update,showError);
+            }
+            else{x.innerHTML="Geolocation is not supported by this browser.";}
+
+            //$('map-canvas').removeClass('progress large');
+        }
+
+        function showError(error)
+        {
+            switch(error.code)
+            {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML="User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML="Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML="The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML="An unknown error occurred."
+                    break;
+            }
+        }
+
+        function update(position){
+
+        //        getLocation();
+
+                setLat(position.coords.latitude);
+                setLng(position.coords.longitude);
+
+                setCenter();
+
+                reverseGeoCode();
+
+        }
+
+        function showPosition(position)
+        {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+        }
+
+        function geoCode(address) {
+            //alert(address);
+
+            //geocoder.geocode( { 'address': address}, function(results, status) {
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        function mapMarker(marker_latlng,info_content){
+        
+                    var infowindow = new google.maps.InfoWindow();
+                        marker = new google.maps.Marker({
+                            position: marker_latlng,
+                            map: map
+                        });
+                        infowindow.setContent(info_content);
+                        infowindow.open(map, marker);
+        }
+
+        function reverseGeoCode(){
+
+            geocoder.geocode({'latLng': getLatLng()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        address = results[1].formatted_address;
+                        map.setZoom(11);
+                        mapMarker(latlng,address);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+            });
+
+            $.ajax({ url: 'php/googlemovie.php',
+                data: {action: 'load-for-area', location: getLat()+'/'+getLng()+'/'+address, param: '35'},
+                type: 'post',
+                //dataType: 'json',
+                success: function(output) {
+
+                    $("#movieinfo").html(output);
+
+                    //var moviearray = JSON.parse(String(output));
+                    //var moviearray = output;
+
+                    var moviearray = $.parseJSON(output);
+
+                    //geoCode(moviearray);
+
+                    for(var i = 0 ; i < moviearray.length; i++){
+
+                        content = moviearray[i]['name']+"<br/>"+
+                                  moviearray[i]['address']+", "+moviearray[i]['city']+", "+moviearray[i]['state']+"<br/>"
+                                  moviearray[i]['phone'];
+
+                        mapMarker(new google.maps.LatLng(moviearray[i]['lat'],moviearray[i]['lng'],false),
+                                content);
+                    }
+                    //
+                    //alert(output);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<body data-spy="scroll" data-target=".subnav" data-offset="50" screen_capture_injected="true">
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><h1>metro-bootstrap</h1></a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <div class="navbar-right">
+
+                <div id="bannerads-container">
+                    <div class="bannerad">
+                <span class="bannerad-image">
+                  <a href="http://themeforest.net/search?term=metro&ref=talkslab" title="ThemeForest" target="_blank">
+                      <img class="bannerad-img" src="docs/banners/banner1.png" title="ThemeForest" alt="ThemeForest" height="90" width="120">
+                  </a>
+                </span>
+                <span class="bannerad-text">
+                  <a href="http://themeforest.net/search?term=metro&ref=talkslab" target="_blank">
+                      Get metro templates
+                      <small>
+                          Find the best modern, responsive, elegant and professional metro-style templates for your site.
+                      </small>
+                  </a>
+                </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1>Simple bootstrap from Twitter with Metro style!</h1>
+        <p class="lead">from talkslab based on <a href="https://github.com/twitter/bootstrap/">Twitter Bootstrap</a></p>
+        <div id="" class=""
+        <p>
+            <a id="update-location" onclick="getLocation()" class="btn btn-lg btn-success">Find Location</a>
+            &nbsp;
+            <a href="components.html" class="btn btn-lg btn-info">Components</a>
+        </p>
+        <div id="map-canvas" class="map"></div>
+    </div>
+
+    <!-- Site footer -->
+    <div class="footer">
+        <p>A talkslab production by <a href="http://twitter.com/gsferreira" target="_blank">gsferreira</a>, <a href="http://twitter.com/nelsonreis" target="_blank">nelsonreis</a> and <a href="http://twitter.com/ruimlneves" target="_blank">ruimlneves</a>.</p>
+    </div>
+
+</div> <!-- /container -->
+<!-- Le javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="docs/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="docs/bootstrap.js"></script>
+<script type="text/javascript" src="docs/jquery.validate.js"></script>
+<script type="text/javascript" src="docs/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript" src="docs/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="docs/metro-bootstrap/metro-docs.js"></script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36060270-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+</body>
+</html>
