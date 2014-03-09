@@ -60,48 +60,44 @@ class GoogleMovieShowtimes {
 		return FALSE;
 	}
 
-	function parse() {
-		if ($this->params['mid']) {
-			$i = 0;
-			$resp = array();
+    function parse() {
+        if ($this->params['mid']) {
 
-			foreach ($this->html->find('#movie_results .movie') as $div) {
-				$resp['movie'][$i]['name'] = strip_tags($div->find('h2', 0)->innertext);
-				$resp['movie'][$i]['info links'] = strip_tags($div->find('.info, .links', 0)->innertext);
-				$resp['movie'][$i]['info'] = strip_tags($div->find('.info', 1)->innertext);
+            $return = $this->parse_movie();
+        }
+        else{
 
-				$actors = $div->find('.info span');
-				$j = 0;
-				foreach($actors as $actor) {
-					$resp['movie'][$i]['actors'][$j] = strip_tags($actor->innertext);
-					$j++;
-				}
+            $return = $this->parse_theater();
+        }
+            return $return;
 
-				$resp['movie'][$i]['stars'] = strip_tags($div->find('nobr', 1)->innertext);
+    }
 
-				$j = 0;
-				foreach ($this->html->find('#movie_results .theater') as $div) {
-					$resp['movie'][$i]['theater'][$j]['name'] = strip_tags($div->find('.name a', 0)->innertext);
-					$resp['movie'][$i]['theater'][$j]['address'] = strip_tags($div->find('.address', 0)->innertext);
+    function parse_movie(){
 
-					$k = 0;
-					foreach ($div->find('.times span') as $time) {
-						$resp['movie'][$i]['theater'][$j]['time'][$k] = strip_tags($time->innertext);
+        $resp = array();
 
-						$k++;
-					}
-					$j++;
-				}
+        foreach ($this->html->find('#movie_results .movie') as $div) {
+            $mid = $this->params['mid'];
+            $resp['movie'][$mid]['mid'] = $mid;
+            $resp['movie'][$mid]['name'] = iconv("utf-8", "utf-8//ignore",strip_tags($div->find('h2', 0)->innertext));
+            $resp['movie'][$mid]['info links'] = strip_tags($div->find('.info, .links', 0)->innertext);
+            //$resp['movie'][$mid]['info'] = strip_tags($div->find('.info', 1)->innertext);
 
-				$i++;
-			}
+            $actors = $div->find('.info span');
+            $j = 0;
+            foreach($actors as $actor) {
+                $resp['movie'][$mid]['actors'][$j] = iconv("utf-8", "utf-8//ignore",strip_tags($actor->innertext));
+                $j++;
+            }
 
-			return $resp;
-		}
+            //$resp['movie'][[$mid]]['stars'] = strip_tags($div->find('nobr', 1)->innertext);
+        }
 
-		$i = 0;
-		$resp = array();
+        return $resp;
+    }
 
+    function parse_theater(){
 		foreach ($this->html->find('#movie_results .theater') as $div) {
 
 			$h2_tag = $div->find('h2',0);
@@ -113,46 +109,57 @@ class GoogleMovieShowtimes {
 				$temp_var = explode('?',strip_tags($a_tag->getAttribute('href')));
 
 				parse_str(html_entity_decode($temp_var[1]),$link_array);
+                
 				if(isset($link_array['tid'])){
-				$resp['theater'][$i]['tid'] = $link_array['tid'];
+                
+                    $tid = $link_array['tid'];
+				    $resp['theater'][$tid]['tid'] = $tid;
 				}
-				else{
-				$resp['theater'][$i]['tid'] = '';	
-				}
+                else{
+                    //TODO what if theater doesn't have an id?
+                }
+				
 
-			$resp['theater'][$i]['name'] = strip_tags($div->find('h2 a', 0)->innertext);
-			
+			$resp['theater'][$tid]['name'] = iconv("utf-8", "utf-8//ignore",strip_tags($div->find('h2 a', 0)->innertext));
+
 			}
 			else{
-
-			$resp['theater'][$i]['tid'] = '';
-			$resp['theater'][$i]['name'] = strip_tags($h2_tag->innertext);
-			
+            //TODO what if theater name doesn't have a link?
 			}
 
-			$resp['theater'][$i]['info'] = strip_tags($div->find('.info', 0)->innertext);
+			$resp['theater'][$tid]['info'] = strip_tags($div->find('.info', 0)->innertext);
 
 			$movies = $div->find('.movie');
-			$j = 0;
-			foreach($movies as $movie) {
-				
-				$resp['theater'][$i]['movies'][$j]['name'] = strip_tags($movie->find('a', 0)->innertext);
-				$resp['theater'][$i]['movies'][$j]['info'] = strip_tags($movie->find('.info', 0)->innertext);
 
-				$k = 0;
-				foreach ($movie->find('.times span') as $time) { 
-          $resp['theater'][$i]['movies'][$j]['time'][$k] = strip_tags($time->innertext);
-          $k++;
-        }
+            foreach($movies as $movie) {
 
-				$j++;
+                $url = parse_url("http://www.google.com".$movie->find('a', 0)->getAttribute('href'));
+                parse_str(html_entity_decode($url['query']),$url_query);
+                $mid = $url_query['mid'];
+                
+                $resp['theater'][$tid]['movies'][$mid]['mid'] = $mid;
+
+                if(!isset($resp['movies'][$mid])){
+
+                    $movie_RAW = new GoogleMovieShowtimes(NULL,$mid,NULL);
+
+                    $single_movie = $movie_RAW->parse();
+
+                    $resp['movies'][$mid] = $single_movie['movie'][$mid];
+                }
+
+                $k = 0;
+
+                foreach ($movie->find('.times span') as $time) {
+                    $resp['theater'][$tid]['movies'][$mid]['time'][$k] = strip_tags($time->innertext);
+                    $k++;
+                }
+
 			}
 
-			$i++;
 		}
 
 		return $resp;
-	}
+	    }
 }
 
-?>

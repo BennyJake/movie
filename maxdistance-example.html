@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Map Example</title>
+    <title>Map Example - Maximum Distance</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/map.css" />
   </head>
@@ -20,6 +20,12 @@
             <div id="form-input">
               <label for="address">Enter Address or Zip Code:</label>
               <input type="text" id="address" name="address" />
+              <select id="maxdistance" name="maxdistance">
+                <option value="10">10 Miles</option>
+                <option value="20">20 Miles</option>
+                <option value="30">30 Miles</option>
+                <option value="40">40 Miles</option>
+              </select>
              </div>
             
             <button id="submit" type="submit">Submit</button>
@@ -34,35 +40,17 @@
       </div>
     </div>
 
+    <div id="distances"></div>
+
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="js/handlebars-1.0.0.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="js/jquery.storelocator.js"></script>
       <script>
-          $(function() {
-              $('#map-container').storeLocator({
-                  autoGeocode: true,
-                  data: "MEOW!",
-                  dataType: "json",
-                  dataLocation: "php/test.php"
-                  /*
-                  ,
-                  callbackBeforeSend:
-                           function(){
-                               $.ajax({
-                               type: "POST",
-                               url: "php/test.php",
-                               data: {"action": "TESTING", "latitude": olat}
-                               ,
-                               success: function(data){
-                                   alert(data);
-                               }
-                               });
-                           }*/
-              });
-          });
+        $(function() {
+          $('#map-container').storeLocator({'maxDistance': true});
+        });
       </script>
-
 
   </body>
 </html>

@@ -23,54 +23,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="loaddb.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/loaddb.php">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="169" selection-end="169" vertical-scroll-proportion="0.2554645" vertical-offset="0" max-vertical-offset="2822">
+            <state line="48" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="-6.3076925" vertical-offset="488" max-vertical-offset="1241">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.storelocator.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/jquery.storelocator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="402" column="22" selection-start="13302" selection-end="13302" vertical-scroll-proportion="-9.538462" vertical-offset="6586" max-vertical-offset="14263">
               <folding>
-                <marker date="1386391916846" expanded="true" signature="545:602" placeholder="SELECT ZipCo..zipcodes..." />
-                <marker date="1386391916846" expanded="true" signature="3920:3950" placeholder="SELECT * FRO..theater..." />
-                <marker date="1386391916846" expanded="true" signature="3951:4044" placeholder="INSERT INTO ..." />
-                <marker date="1386391916846" expanded="true" signature="3951:4022" placeholder="INSERT INTO ..." />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="google-style-loader.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/google-style-loader.css">
+      <file leaf-file-name="test.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/php/test.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="663">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="googlemovie.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/php/googlemovie.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="56" selection-start="687" selection-end="687" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="1190">
+            <state line="85" column="0" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.527121" vertical-offset="1066" max-vertical-offset="2108">
               <folding>
-                <marker date="1385937423410" expanded="true" signature="1642:1659" placeholder="SELECT * fro..FOO..." />
+                <element signature="e#6#83#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="json_decode.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/json_decode.js">
+      <file leaf-file-name="location-list-description.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/location-list-description.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="5" selection-start="1396" selection-end="1396" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="391">
+            <state line="10" column="30" selection-start="402" selection-end="402" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="374">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example.php">
+      <file leaf-file-name="infowindow-description.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/infowindow-description.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="714">
-              <folding />
+            <state line="10" column="66" selection-start="313" selection-end="313" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="289">
+              <folding>
+                <marker date="1394237723389" expanded="true" signature="118:310" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,16 +77,27 @@
       <file leaf-file-name="GoogleMovieShowtimes.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="40" selection-start="994" selection-end="994" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2329">
+            <state line="114" column="46" selection-start="3494" selection-end="3494" vertical-scroll-proportion="-5.740741" vertical-offset="1473" max-vertical-offset="2907">
+              <folding>
+                <element signature="e#6#899#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="geocode.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/geocode.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="14" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="918">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="literal.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/literal.html">
+      <file leaf-file-name="locations.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/locations.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="23" selection-start="1232" selection-end="1305" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="2261">
+            <state line="0" column="90" selection-start="90" selection-end="90" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="102">
               <folding />
             </state>
           </provider>
@@ -108,14 +118,20 @@
         <option value="$PROJECT_DIR$/literal.html" />
         <option value="$PROJECT_DIR$/php/GoogleMovieShowtimes.php" />
         <option value="$PROJECT_DIR$/example.php" />
-        <option value="$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php" />
         <option value="$PROJECT_DIR$/css/google-style-loader.css" />
         <option value="$PROJECT_DIR$/json_decode.js" />
         <option value="$PROJECT_DIR$/loaddb.js" />
         <option value="$PROJECT_DIR$/loaddb.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/php/googlemovie.php" />
         <option value="$PROJECT_DIR$/loaddb.php" />
+        <option value="$PROJECT_DIR$/locations.json" />
+        <option value="$PROJECT_DIR$/phpinfo.php" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/templates/location-list-description.html" />
+        <option value="$PROJECT_DIR$/templates/infowindow-description.html" />
+        <option value="$PROJECT_DIR$/js/jquery.storelocator.js" />
+        <option value="$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php" />
+        <option value="$PROJECT_DIR$/php/test.php" />
       </list>
     </option>
   </component>
@@ -152,31 +168,46 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -186,11 +217,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_theater_map" />
+              <option name="myItemId" value="movie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -202,9 +233,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -215,34 +259,15 @@
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
-  </component>
-  <component name="PublishConfig">
-    <servers>
-      <server id="49c2befc-a446-48d3-8a98-7d8a98d17212">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="6ded1675-091c-42b8-b1db-b851bc3a66ff">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="b4f4efe8-4b5c-4d18-b906-4ea04655279f">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-    </servers>
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\movie" />
+      <recent name="C:\xampp\htdocs\movie\img" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\movie\js" />
       <recent name="C:\xampp\htdocs\movie_theater_map\php\googlemovie" />
     </key>
   </component>
@@ -315,124 +340,159 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/loaddb.php">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="27" selection-start="819" selection-end="819" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2176">
-          <folding>
-            <marker date="1386391916846" expanded="true" signature="545:602" placeholder="SELECT ZipCo..zipcodes..." />
-            <marker date="1386391916846" expanded="true" signature="3920:3950" placeholder="SELECT * FRO..theater..." />
-            <marker date="1386391916846" expanded="true" signature="3951:4044" placeholder="INSERT INTO ..." />
-            <marker date="1386391916846" expanded="true" signature="3951:4022" placeholder="INSERT INTO ..." />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/google-style-loader.css">
+    <entry file="file://$PROJECT_DIR$/../movie_old/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="663">
+        <state line="16" column="78" selection-start="714" selection-end="714" vertical-scroll-proportion="0.36510068" vertical-offset="0" max-vertical-offset="2635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/class/time.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="784">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maxdistance-example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="31" selection-start="606" selection-end="606" vertical-scroll-proportion="-11.115385" vertical-offset="0" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/autogeocode-example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="8" selection-start="1397" selection-end="1488" vertical-scroll-proportion="0.7261745" vertical-offset="156" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/json-example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="96" selection-start="1451" selection-end="1503" vertical-scroll-proportion="-21.461538" vertical-offset="156" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/kml-infowindow-description.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="763">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/kml-location-list-description.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="26" selection-start="164" selection-end="164" vertical-scroll-proportion="0.112137206" vertical-offset="0" max-vertical-offset="758">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geocode.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="31" selection-start="207" selection-end="207" vertical-scroll-proportion="0.22427441" vertical-offset="0" max-vertical-offset="758">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/handlebars-1.0.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="46" selection-start="594" selection-end="594" vertical-scroll-proportion="-0.30869" vertical-offset="442" max-vertical-offset="38811">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/locations.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="90" selection-start="90" selection-end="90" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="745">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/php/googlemovie.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="12" selection-start="852" selection-end="852" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="1190">
+        <state line="86" column="52" selection-start="3881" selection-end="3881" vertical-scroll-proportion="0.70738256" vertical-offset="850" max-vertical-offset="2261">
           <folding>
-            <marker date="1385937423410" expanded="true" signature="1642:1659" placeholder="SELECT * fro..FOO..." />
+            <marker date="1390437570214" expanded="true" signature="-1:-1" placeholder="SELECT * fro..FOO..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/json_decode.js">
+    <entry file="file://$PROJECT_DIR$/phpinfo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="5" selection-start="1396" selection-end="1396" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="391">
+        <state line="7" column="10" selection-start="95" selection-end="95" vertical-scroll-proportion="0.15699208" vertical-offset="0" max-vertical-offset="758">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="0" selection-start="1977" selection-end="1977" vertical-scroll-proportion="0.0" vertical-offset="1122" max-vertical-offset="2329">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/literal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="23" selection-start="1232" selection-end="1305" vertical-scroll-proportion="0.0" vertical-offset="122" max-vertical-offset="2261">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/google_map_api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="42" selection-start="337" selection-end="337" vertical-scroll-proportion="0.19515306" vertical-offset="0" max-vertical-offset="784" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/google-style-loader.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/json_decode.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="5" selection-start="1396" selection-end="1396" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="391">
+        <state line="919" column="9" selection-start="27315" selection-end="27315" vertical-scroll-proportion="0.34432718" vertical-offset="15362" max-vertical-offset="19142">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="40" selection-start="5102" selection-end="5102" vertical-scroll-proportion="1.4638889" vertical-offset="1802" max-vertical-offset="5015" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="40" selection-start="994" selection-end="994" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2329">
+        <state line="48" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="-6.3076925" vertical-offset="488" max-vertical-offset="1241">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/googlemovie.php">
+    <entry file="file://$PROJECT_DIR$/templates/infowindow-description.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="56" selection-start="687" selection-end="687" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="1190">
+        <state line="10" column="66" selection-start="313" selection-end="313" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="289">
           <folding>
-            <marker date="1385937423410" expanded="true" signature="1642:1659" placeholder="SELECT * fro..FOO..." />
+            <marker date="1394237723389" expanded="true" signature="118:310" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/literal.html">
+    <entry file="file://$PROJECT_DIR$/templates/location-list-description.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="23" selection-start="1232" selection-end="1305" vertical-scroll-proportion="0.0" vertical-offset="122" max-vertical-offset="2261">
+        <state line="10" column="30" selection-start="402" selection-end="402" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loaddb.php">
+    <entry file="file://$PROJECT_DIR$/js/jquery.storelocator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="169" selection-end="169" vertical-scroll-proportion="0.2554645" vertical-offset="0" max-vertical-offset="2822">
+        <state line="402" column="22" selection-start="13302" selection-end="13302" vertical-scroll-proportion="-9.538462" vertical-offset="6586" max-vertical-offset="14263">
           <folding>
-            <marker date="1386391916846" expanded="true" signature="545:602" placeholder="SELECT ZipCo..zipcodes..." />
-            <marker date="1386391916846" expanded="true" signature="3920:3950" placeholder="SELECT * FRO..theater..." />
-            <marker date="1386391916846" expanded="true" signature="3951:4044" placeholder="INSERT INTO ..." />
-            <marker date="1386391916846" expanded="true" signature="3951:4022" placeholder="INSERT INTO ..." />
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/geocode.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="14" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="918">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/googlemovie/GoogleMovieShowtimes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="46" selection-start="3494" selection-end="3494" vertical-scroll-proportion="-5.740741" vertical-offset="1473" max-vertical-offset="2907">
+          <folding>
+            <element signature="e#6#899#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="0" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.527121" vertical-offset="1066" max-vertical-offset="2108">
+          <folding>
+            <element signature="e#6#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
