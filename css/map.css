@@ -1,28 +1,42 @@
-#store-locator-container{
-	float: left;
-	margin-left: 20px;
-	width: 875px;
-	font: normal 12px Arial, Helvetica, sans-serif;
-	color: #333;
+html{
+    height:100%;
 }
 
-#page-header{
-	float: left;
+body{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
-#form-container{
-	clear: left;
-	float: left;
-	margin-top: 15px;
+#app-container{
+    width:100%;
+    height:100%;
+}
+
+#map-container, #map{
+	height: 100%;
 	width: 100%;
 }
 
-#map-container{
-	clear: left;
-	float: left;
-	margin-top: 27px;
-	height: 530px;
-	width: 875px;
+#form-container{
+    left: 275px;
+    position: absolute;
+    top: 30px;
+    z-index: 100;
+}
+
+#movie-list-container{
+    z-index: 100;
+    position: absolute;
+    top: 30px;
+    left: 90px;
+}
+
+#theater-list-container{
+    position: absolute;
+    right: 5px;
+    top: 30px;
+    z-index: 100;
 }
 
 #map-container a{
@@ -43,23 +57,31 @@
     cursor: pointer;
 }
 
-#loc-list{
-	float: left; 
-	width: 240px;
-	height: 530px;
-	overflow: auto;
+#movie-list,#movies{
+    height: 700px;
+    overflow: hidden;
+    width: 150px;
 }
 
-#loc-list ul{
-	display: block;
-	clear: left;
-	float: left;
-	list-style: none;
+#movies .caption{
+    height:55px;
+    text-align: center;
+}
+
+#loc-list, #list{
+    height: 85px;
+    overflow: hidden;
+    width: 630px;
+}
+
+#loc-list ul, #movie-list ul{
+	list-style: none outside none;
 	margin: 0;
 	padding: 0;
 }
 
-#loc-list .list-label{
+
+#loc-list .list-label, ##movie-list .list-label{
 	float: left;
 	margin: 10px 0 0 6px;
 	padding: 2px 3px;
@@ -68,45 +90,53 @@
 	background: #451400;
 	color: #fff;
 	font-weight: bold;
+    width:20px;
+    height:20px;
 }
 
-#loc-list .list-details{
+#loc-list .list-details, #movie-list .list-details{
 	float: left;
 	margin-left: 6px;
 	width: 165px;
 }
 
-#loc-list .list-content{
+#loc-list .list-content, ##movie-list .list-content{
 	padding: 10px;
 }
 
-#loc-list .loc-dist{
+#loc-list .loc-dist, ##movie-list .loc-dist{
 	font-weight: bold;
 	font-style: italic;
 	color: #8e8e8e;
 }
 
-#loc-list li{
-	display: block;
-	clear: left;
-	float: left;
-	margin: 6px 10px;
+#loc-list li, #movie-list li{
 	cursor: pointer;
-	width: 200px;
-	border: 1px solid #fff; /* Adding this to prevent moving li elements when adding the list-focus class*/
+    display: inline-block;
+    margin: 5px;
 }
 
-#loc-list .list-focus{
-	border: 1px solid rgba(82,168,236,0.9);
-	-moz-box-shadow: 0 0 8px rgba(82,168,236,0.7);
-	-webkit-box-shadow: 0 0 8px rgba(82,168,236,0.7);
-	box-shadow: 0 0 8px rgba(82,168,236,0.7);
-	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+#loc-list li{
+    height: 75px;
+    width: 200px;
+}
+
+#movie-list li{
+    width: 125px;
+}
+
+#loc-list .list-focus, #movie-list .list-focus{
+
 }
 
 #map-container .loc-name{
 	color: #AD2118;
 	font-weight: bold;
+    height: 25px;
+}
+
+#map-container .loc-address{
+    height: 100px;
 }
 
 #search-form{
@@ -155,9 +185,7 @@
 }
 
 #map{
-	float: left; 
-	width: 635px; 
-	height: 530px; 
+
 }
 
 /* Infowindow Roboto font override */
@@ -206,14 +234,4 @@
 	border: 1px solid #000;
 	border-radius: 3px;
 	box-shadow: 0 0 3px #656565;
-}
-
-
-/* The following is for the geocode page and not the store locator */
-
-#geocode-result{
-	clear: left;
-	float: left;
-	margin-top: 30px;
-	width: 100%;
 }

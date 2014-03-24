@@ -394,7 +394,6 @@ $.fn.storeLocator = function(options) {
                   for( key in this ){
                     value = this[key];
 
-                      console.log('key: '+key+' value: '+value);
 
                     if(key === 'web'){
                       if ( value ) value = value.replace("http://",""); // Remove scheme (todo: should NOT be done)
@@ -403,13 +402,11 @@ $.fn.storeLocator = function(options) {
                       locationData[key] = value;
                   }
 
-                  console.log('before distance: '+locationData['distance']);
 
                   if(!locationData['distance']){
                     locationData['distance'] = GeoCodeCalc.CalcDistance(orig_lat,orig_lng,locationData['lat'],locationData['lng'], GeoCodeCalc.EarthRadius);
                   }
 
-                  console.log('after distance: '+locationData['distance']);
 
                 //Create the array
                 if(settings.maxDistance === true && firstRun !== true && maxDistance){

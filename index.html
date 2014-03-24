@@ -1,68 +1,132 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Map Example</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/map.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/todc-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css"/>
+</head>
 
-  <body>
-    
-    <div id="store-locator-container">
-      <div id="page-header">
-        <h1>Using Chipotle as an Example</h1>
-        <p>I used locations around Minneapolis and the southwest suburbs. So, for example, Edina, Plymouth, Eden Prarie, etc. would be good for testing the functionality. 
-        You can use just the city as the address - ex: Edina, MN.</p>
-      </div>
-      
-      <div id="form-container">
-        <form id="user-location" method="post" action="#">
-            <div id="form-input">
-              <label for="address">Enter Address or Zip Code:</label>
-              <input type="text" id="address" name="address" />
-             </div>
-            
-            <button id="submit" type="submit">Submit</button>
+<body>
+
+<div id="app-container">
+
+
+    <div id="form-container" class="panel panel-info">
+        <div class="panel-body">
+        <form id="user-location" method="post" action="#" class="form-inline" role="form">
+            <div id="form-input" class="form-group input-group">
+                <input class="form-control" type="text" id="address" name="address" placeholder="Where are you?">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" id="submit" type="submit">Go!</button>
+                </span>
+            </div>
         </form>
-      </div>
-
-      <div id="map-container">
-        <div id="loc-list">
-            <ul id="list"></ul>
         </div>
-        <div id="map"></div>
-      </div>
     </div>
 
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="js/handlebars-1.0.0.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="js/jquery.storelocator.js"></script>
-      <script>
-          $(function() {
-              $('#map-container').storeLocator({
-                  autoGeocode: true,
-                  data: "MEOW!",
-                  dataType: "json",
-                  dataLocation: "php/test.php"
-                  /*
-                  ,
-                  callbackBeforeSend:
-                           function(){
-                               $.ajax({
-                               type: "POST",
-                               url: "php/test.php",
-                               data: {"action": "TESTING", "latitude": olat}
-                               ,
-                               success: function(data){
-                                   alert(data);
-                               }
-                               });
-                           }*/
-              });
-          });
-      </script>
+    <div id="movie-list-container" class="panel panel-info">
+        <div id="movie-list">
+            <ul id="movies"></ul>
+        </div>
+        <div class="text-center scroll-btn">
+            <div class="btn-group">
+                <button id="movie-backward" class="btn btn-default">Backward</button>
+                <button id="movie-update" class="btn btn-default">Update</button>
+                <button id="movie-forward" class="btn btn-default">Forward</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="theater-list-container" class="panel panel-info">
+        <div id="loc-list">
+            <ul id="list">
+            </ul>
+        </div>
+        <div class="text-center scroll-btn">
+            <div class="btn-group">
+                <button id="theater-backward" class="btn btn-default">Backward</button>
+                <button id="theater-forward" class="btn btn-default">Forward</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
 
 
-  </body>
+
+</div>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/handlebars-1.0.0.min.js"></script>
+<script src="js/jquery.newsTicker.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="js/jquery.storelocator.js"></script>
+<script>
+
+    $(function () {
+
+        generate_map('');
+
+    });
+
+    $('#movie-update').click(function(){
+       var updated_data = [];
+       $('.movie-on').each(function(){updated_data.push(this.id); });
+       generate_map(updated_data.toString());
+    });
+
+    function generate_map(data){
+        $('#map-container').storeLocator({
+            mapDiv: "map",
+            autoGeocode: true,
+            data: data,
+            dataType: "json",
+            dataLocation: "php/test.php",
+            callbackSuccess: function (data) {
+
+                var movieList = '';
+                for(key in data['movies']){
+                    movieList += '<li><div class="thumbnail">'+
+                            '<img src="'+data['movies'][key]['image']+'"><div class="caption">'+
+                            data['movies'][key]['name']+'</div>' +
+                            '<button type="button" id="'+data['movies'][key]['mid']+'" class="movie-choose-button movie-on btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span></button>' +
+                            '</div></li>';
+                }
+                $('#movies').html(movieList);
+
+                movie_binding();
+            },
+            callbackComplete: function () {
+                var moviescroller = $('#movies').newsTicker({ row_height: 225, max_rows: 3, autostart: 0, duration: 4000, prevButton: $('#movie-backward'), nextButton: $('#movie-forward') });
+                var theaterscroller = $('#list').newsTicker({ row_height: 95, max_rows: 7, autostart: 0, duration: 4000, prevButton: $('#theater-backward'), nextButton: $('#theater-forward') });
+            }
+        });
+    }
+
+    function movie_binding(){
+        $('.movie-choose-button').on('click',function(){
+
+            if($(this).hasClass('movie-on')){
+                $(this).removeClass('movie-on');
+                $(this).addClass('movie-off');
+                $('span',this).removeClass('glyphicon-thumbs-up');
+                $('span',this).addClass('glyphicon-thumbs-down');
+            }
+            else if($(this).hasClass('movie-off')){
+                $(this).removeClass('movie-off');
+                $(this).addClass('movie-on');
+                $('span',this).removeClass('glyphicon-thumbs-down');
+                $('span',this).addClass('glyphicon-thumbs-up');
+            }
+
+        });
+    }
+</script>
+
+</body>
 </html>
