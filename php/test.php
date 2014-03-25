@@ -7,6 +7,8 @@
  */
 
 //http://localhost/movie/php/test.php?latitude=40.703648&longitude=-89.40731199999999&origin=106+North+Main+Street%2C+Washington%2C+IL+61571%2C+USA&data=MEOW!&test=1
+//movie.bennyjake.com/php/test.php?latitude=40.703648&longitude=-89.40731199999999&origin=106+North+Main+Street%2C+Washington%2C+IL+61571%2C+USA&data=MEOW!&test=1
+
 
 //header('Content-Type: application/json');
 
@@ -32,8 +34,8 @@ if(isset($_GET['latitude']) && isset($_GET['longitude'])){
 
 function get_movie_search_db($data){
 
-    $dbh = new PDO('mysql:host=localhost;dbname=bennyjak_movie', 'root', '');
-    //$dbh = new PDO('mysql:host=76.74.220.80;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
+    //$dbh = new PDO('mysql:host=localhost;dbname=bennyjak_movie', 'root', '');
+    $dbh = new PDO('mysql:host=76.74.220.80;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
 
     //THEATER
 
@@ -65,16 +67,21 @@ function get_movie_search_db($data){
             $theater_movie_row = $movie_search_api['theater'][$theater_info['tid']];
 
             //add
-            $insert_theater_movie = "INSERT INTO theater_movie (tid_mid,tid, mid, date, time) VALUES (?,?,?,?,?);";
+            $insert_theater_movie = "INSERT INTO theater_movie (tid_mid,tid, mid, date, time) VALUES (:tid_mid,:tid, :mid, :date, :time);";
 
             $prepare_theater_movie = $dbh->prepare($query_theater_movie);
 
             //$this->resp['theater'][$tid]['movies'][$mid]['time'][$k]
             foreach($theater_movie_row["movies"] as $mid => $movie_info){
-                //foreach($movie_info['time'] as $key => $single_time){
-                    //echo "Single Time: ";var_dump($single_time);
-                    //$prepare_theater_movie->execute(array($theater_info['tid'].'-'.$mid,$theater_info['tid'],$mid,date('now'),$single_time));
-                //}
+                foreach($movie_info['time'] as $key => $single_time){
+                    
+					$prepare_theater_movie->bindParam(':tid_mid',$theater_info['tid'].'-'.$mid);
+					$prepare_theater_movie->bindParam(':tid',$theater_info['tid']);
+					$prepare_theater_movie->bindParam(':mid',$mid);
+					$prepare_theater_movie->bindParam(':date',date('now'));
+					$prepare_theater_movie->bindParam(':time',$single_time);					
+                    $prepare_theater_movie->execute();
+                }
             }
 
                 //insert into $table (field, value) values (:name, :value) on duplicate key update value=:value2
@@ -82,7 +89,8 @@ function get_movie_search_db($data){
         }
         //we got results based on the tid
         else{
-
+			//foreach($theater_movie_row as 
+			
             //need_update($theater_info['date'],24);
 
         }
@@ -90,7 +98,7 @@ function get_movie_search_db($data){
         $theater_movie[] = $theater_movie_row;
     }
 
-    echo "<pre>";
+    echo "<hr/><pre>";
     var_dump($theater_movie);
     echo "</pre>";
 

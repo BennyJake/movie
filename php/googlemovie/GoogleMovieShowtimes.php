@@ -155,16 +155,39 @@ class GoogleMovieShowtimes {
                     $this->resp['movies'][$mid] = $single_movie['movie'][$mid];
                 }
 
-                $k = 0;
 
+				$time_array = array();
                 foreach ($movie->find('.times span') as $time) {
-                    //$skim_time = htmlentities(strip_tags($time->innertext));
-                    $time = trim(str_replace(array('8206','nbsp'),'',preg_replace("/[^a-zA-Z0-9]+/", "", strip_tags($time->innertext))));
-                    if($time!=''){
-                        $this->resp['theater'][$tid]['movies'][$mid]['time'][$k] = $time;
-                        $k++;
+                    
+					$time = trim(str_replace(array('&',';','#','8206','nbsp'),'',strip_tags($time->innertext)));
+                    
+					if($time!=''){
+                        $time_array[] = $time;
                     }
                 }
+				
+				$period = '';
+					
+				foreach(array_reverse($time_array) as $key => $time){
+						if(substr($time,-2)=='pm'){
+							$period = 'pm';
+							$time_array[$key] = $this->time_pm(substr($time,0,-2));
+						}
+						elseif(substr($time,-2)=='am'){
+							$period = 'am';
+							$time_array[$key] = $this->time_am(substr($time,0,-2));							
+						}
+						else{							
+							if($period=='pm'){
+								$time_array[$key] = $this->time_pm($time);
+							}
+							elseif($period=='am'){
+								$time_array[$key] = $this->time_am($time);
+							}
+						}
+				}
+                    
+				$this->resp['theater'][$tid]['movies'][$mid]['time'] = array_reverse($time_array);
 
 			}
 
@@ -172,6 +195,18 @@ class GoogleMovieShowtimes {
 
 		return $this->resp;
 	    }
+		
+	function time_pm($time){
+		$time_sep = explode(':',$time);
+		return $time_sep[0]!='12' ? ($time_sep[0]+12).':'.$time_sep[1] : $time_sep[0].':'.$time_sep[1];	
+	}
+	
+	function time_am($time){
+		
+		$time_sep = explode(':',$time);
+		//if the hour is less than 10, add a leading 0
+		return $time_sep[0]<10 ? '0'.$time_sep[0].':'.$time_sep[1]:$time_sep[0].':'.$time_sep[1];
+	}
 
     function parse_theater_address($data){
 
