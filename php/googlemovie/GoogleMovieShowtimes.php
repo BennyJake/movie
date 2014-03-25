@@ -158,7 +158,8 @@ class GoogleMovieShowtimes {
                 $k = 0;
 
                 foreach ($movie->find('.times span') as $time) {
-                    $time = preg_replace("/[^A-Za-z0-9 ]/", '', strip_tags($time->innertext));
+                    //$skim_time = htmlentities(strip_tags($time->innertext));
+                    $time = trim(str_replace(array('8206','nbsp'),'',preg_replace("/[^a-zA-Z0-9]+/", "", strip_tags($time->innertext))));
                     if($time!=''){
                         $this->resp['theater'][$tid]['movies'][$mid]['time'][$k] = $time;
                         $k++;
