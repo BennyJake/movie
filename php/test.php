@@ -16,6 +16,7 @@ session_start();
 
 require_once('googlemovie/GoogleMovieShowtimes.php');
 
+
 //return
 if(isset($_GET['latitude']) && isset($_GET['longitude'])){
 
@@ -37,6 +38,8 @@ function get_movie_search_db($data){
     //$dbh = new PDO('mysql:host=localhost;dbname=bennyjak_movie', 'root', '');
     $dbh = new PDO('mysql:host=76.74.220.80;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
 
+    $now = date('Y-m-d', strtotime('now'));
+
     //THEATER
 
     $query_theater = "SELECT tid, lat, lng, name, address, city, state, phone,
@@ -48,14 +51,19 @@ function get_movie_search_db($data){
 
     //THEATER-MOVIE UPDATE TIMES
 
-    $query_theater_movie = "SELECT tid_mid, tid, mid, date, time FROM theater_movie WHERE tid = ?;";
-    $prepare_theater_movie = $dbh->prepare($query_theater_movie);
+    //select
+    $query_theater_movie = "SELECT tid, mid, date, time FROM theater_movie WHERE tid = :var_tid;";
+    $prepare_select_theater_movie = $dbh->prepare($query_theater_movie);
+
+    //insert
+    $insert_theater_movie = "INSERT INTO theater_movie (tid, mid, date, time) VALUES (:tid,:mid,:now,:play_time);";
+    $prepare_insert_theater_movie = $dbh->prepare($insert_theater_movie);
 
     //for every theater brought up from our DB search
     foreach($theater_search_db as $theater_info){
 
-        $prepare_theater_movie->execute(array($theater_info['tid']));
-        $theater_movie_row = $prepare_theater_movie->fetchAll(PDO::FETCH_ASSOC);
+        $prepare_select_theater_movie->execute(array(':var_tid'=>$theater_info['tid']));
+        $theater_movie_row = $prepare_select_theater_movie->fetchAll(PDO::FETCH_ASSOC);
 
         //if no results for a tid
         if(empty($theater_movie_row)){
@@ -66,23 +74,19 @@ function get_movie_search_db($data){
             //save this info for the app
             $theater_movie_row = $movie_search_api['theater'][$theater_info['tid']];
 
-            //add
-            $insert_theater_movie = "INSERT INTO theater_movie (tid_mid,tid, mid, date, time) VALUES (:tid_mid,:tid, :mid, :date, :time);";
-
-            $prepare_theater_movie = $dbh->prepare($query_theater_movie);
-
             //$this->resp['theater'][$tid]['movies'][$mid]['time'][$k]
             foreach($theater_movie_row["movies"] as $mid => $movie_info){
                 foreach($movie_info['time'] as $key => $single_time){
-                    
-					$prepare_theater_movie->bindParam(':tid_mid',$theater_info['tid'].'-'.$mid);
-					$prepare_theater_movie->bindParam(':tid',$theater_info['tid']);
-					$prepare_theater_movie->bindParam(':mid',$mid);
-					$prepare_theater_movie->bindParam(':date',date('now'));
-					$prepare_theater_movie->bindParam(':time',$single_time);					
-                    $prepare_theater_movie->execute();
+
+                    $prepare_insert_theater_movie->bindParam(':tid',$theater_info['tid']);
+                    $prepare_insert_theater_movie->bindParam(':mid',$mid);
+                    $prepare_insert_theater_movie->bindParam(':now',$now);
+                    $prepare_insert_theater_movie->bindParam(':play_time',$single_time);
+
+                    $prepare_insert_theater_movie->execute();
                 }
             }
+
 
                 //insert into $table (field, value) values (:name, :value) on duplicate key update value=:value2
 
@@ -97,6 +101,8 @@ function get_movie_search_db($data){
 
         $theater_movie[] = $theater_movie_row;
     }
+
+    $dbh = null;
 
     echo "<hr/><pre>";
     var_dump($theater_movie);
