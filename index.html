@@ -90,11 +90,11 @@
             callbackSuccess: function (data) {
 
                 var movieList = '';
-                for(key in data['movies']){
+                for(key in data['movie']){
                     movieList += '<li><div class="thumbnail">'+
-                            '<img src="'+data['movies'][key]['image']+'"><div class="caption">'+
-                            data['movies'][key]['name']+'</div>' +
-                            '<button type="button" id="'+data['movies'][key]['mid']+'" class="movie-choose-button movie-on btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span></button>' +
+                            '<img src="'+data['movie'][key]['image']+'"><div class="caption">'+
+                            data['movie'][key]['name']+'</div>' +
+                            '<button type="button" id="'+data['movie'][key]['mid']+'" class="movie-choose-button movie-on btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span></button>' +
                             '</div></li>';
                 }
                 $('#movies').html(movieList);

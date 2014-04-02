@@ -83,20 +83,35 @@ class GoogleMovieShowtimes {
 
         foreach ($this->html->find('#movie_results .header') as $div) {
             $mid = $this->params['mid'];
+
             $this->resp['movie'][$mid]['mid'] = $mid;
             $this->resp['movie'][$mid]['name'] = iconv("utf-8", "utf-8//ignore",strip_tags($div->find('h2', 0)->innertext));
-            $this->resp['movie'][$mid]['info links'] = strip_tags($div->find('.info, .links', 0)->innertext);
+            //$this->resp['movie'][$mid]['info links'] = strip_tags($div->find('.info, .links', 0)->innertext);
             $this->resp['movie'][$mid]['image'] = $div->find('img',0)->getAttribute('src');
             //$this->resp['movie'][$mid]['info'] = strip_tags($div->find('.info', 1)->innertext);
 
-            $actors = $div->find('.info span');
-            $j = 0;
+            $info_string = str_replace('&#8206;','',$div->find('.info',-1)->innertext);
+            $info = explode(' - ',substr($info_string,0,strpos($info_string,'<br>')));
+
+            $this->resp['movie'][$mid]['length'] = isset($info[0]) ? $info[0] : "";
+
+            $this->resp['movie'][$mid]['rating'] = isset($info[1]) ? $info[1] : "";
+
+            $this->resp['movie'][$mid]['genre'] = isset($info[2]) ? $info[2] : "";
+
+            $this->resp['movie'][$mid]['director'] = htmlspecialchars(strip_tags($div->find('.info span[itemprop=director]',0)),ENT_QUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5);
+
+            $actors = $div->find('.info span[itemprop=actors]');
+
+            $actor_array = array();
             foreach($actors as $actor) {
-                $this->resp['movie'][$mid]['actors'][$j] = iconv("utf-8", "utf-8//ignore",strip_tags($actor->innertext));
-                $j++;
+                //$this->resp['movie'][$mid]['actors'][$j] = iconv("utf-8", "utf-8//ignore",strip_tags($actor->innertext));
+                $actor_array[] = htmlspecialchars(strip_tags($actor->innertext),ENT_QUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5);
             }
 
-            //$this->resp['movie'][[$mid]]['stars'] = strip_tags($div->find('nobr', 1)->innertext);
+            $this->resp['movie'][$mid]['actors'] = implode(', ',$actor_array);
+
+            $this->resp['movie'][$mid]['synopsis'] = str_replace(array('&laquo; less','more &raquo;'),'',strip_tags($div->find('.syn',0)->innertext));
         }
 
         return $this->resp;
@@ -144,17 +159,16 @@ class GoogleMovieShowtimes {
                 parse_str(html_entity_decode($url['query']),$url_query);
                 $mid = $url_query['mid'];
                 
-                $this->resp['theater'][$tid]['movies'][$mid]['mid'] = $mid;
+                $this->resp['theater'][$tid]['movie'][$mid]['mid'] = $mid;
 
-                if(!isset($this->resp['movies'][$mid])){
+                /*if(!isset($this->resp['movie'][$mid])){
 
                     $movie_RAW = new GoogleMovieShowtimes(NULL,$mid,NULL);
 
                     $single_movie = $movie_RAW->parse();
 
-                    $this->resp['movies'][$mid] = $single_movie['movie'][$mid];
-                }
-
+                    $this->resp['movie'][$mid] = $single_movie['movie'][$mid];
+                }*/
 
 				$time_array = array();
                 foreach ($movie->find('.times span') as $time) {
@@ -187,7 +201,7 @@ class GoogleMovieShowtimes {
 						}
 				}
                     
-				$this->resp['theater'][$tid]['movies'][$mid]['time'] = array_reverse($time_array);
+				$this->resp['theater'][$tid]['movie'][$mid]['time'] = array_reverse($time_array);
 
 			}
 
