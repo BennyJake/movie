@@ -30,6 +30,11 @@ if(isset($_GET['latitude']) && isset($_GET['longitude'])){
 
         echo $_SESSION['test'];
     }
+	else{
+	echo "<hr/><pre>";
+    var_dump($movie_search_db);
+    echo "</pre>";
+	}
 
 }
 
@@ -117,7 +122,7 @@ function get_movie_search_db($data){
 
     $prepare_select_movie_prep = $dbh->query($query_movie_prep)->fetchAll(PDO::FETCH_ASSOC);
 
-    $query_movie = "SELECT mid, name FROM movie WHERE mid = :mid";
+    $query_movie = "SELECT mid, name, image, length, rating, genre, director, actors, synopsis FROM movie WHERE mid = :mid";
     $prepare_select_movie = $dbh->prepare($query_movie);
 
     //insert theater-movie
@@ -162,17 +167,13 @@ function get_movie_search_db($data){
         }
         //we get results back, just need to format the data before sending it back
         else{
-            $theater_movie_db['movies'][$movie_info['mid']] = $movie_info;
+            $theater_movie_db['movies'][$movie_info['mid']] = $movie_row[0];
         }
     }
     
     $dbh = null;
 
-    echo "<hr/><pre>";
-    var_dump($theater_movie_db);
-    echo "</pre>";
-
-    return $theater_search_db;
+    return $theater_movie_db;
 }
 
 function get_movie_search_api($location = NULL, $mid = NULL, $tid = NULL){
