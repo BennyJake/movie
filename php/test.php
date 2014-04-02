@@ -16,6 +16,7 @@ session_start();
 
 require_once('googlemovie/GoogleMovieShowtimes.php');
 
+
 //return
 if(isset($_GET['latitude']) && isset($_GET['longitude'])){
 
@@ -35,7 +36,10 @@ if(isset($_GET['latitude']) && isset($_GET['longitude'])){
 function get_movie_search_db($data){
 
     //$dbh = new PDO('mysql:host=localhost;dbname=bennyjak_movie', 'root', '');
-    $dbh = new PDO('mysql:host=76.74.220.80;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
+    //$dbh = new PDO('mysql:host=76.74.220.80;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
+    $dbh = new PDO('mysql:host=69.172.211.222;port=3306;dbname=bennyjak_movie', 'bennyjak_quiet22', 'quietracket22');
+
+    $now = date('Y-m-d', strtotime('now'));
 
     //THEATER
 
@@ -46,60 +50,126 @@ function get_movie_search_db($data){
     //Pull theater results from the database
     $theater_search_db = $dbh->query($query_theater)->fetchAll(PDO::FETCH_ASSOC);
 
-    //THEATER-MOVIE UPDATE TIMES
+    //THEATER-MOVIE
 
-    $query_theater_movie = "SELECT tid_mid, tid, mid, date, time FROM theater_movie WHERE tid = ?;";
-    $prepare_theater_movie = $dbh->prepare($query_theater_movie);
+    //select theater-movie
+    $query_theater_movie = "SELECT tid, mid, date, time FROM theater_movie WHERE tid = :var_tid AND date >= :date_today;";
+    $prepare_select_theater_movie = $dbh->prepare($query_theater_movie);
+
+    //insert theater-movie
+    $insert_theater_movie = "INSERT INTO theater_movie (tid, mid, date, time) VALUES (:tid,:mid,:now,:play_time);";
+    $prepare_insert_theater_movie = $dbh->prepare($insert_theater_movie);
 
     //for every theater brought up from our DB search
     foreach($theater_search_db as $theater_info){
 
-        $prepare_theater_movie->execute(array($theater_info['tid']));
-        $theater_movie_row = $prepare_theater_movie->fetchAll(PDO::FETCH_ASSOC);
+        $prepare_select_theater_movie->execute(array(':var_tid'=>$theater_info['tid'],':date_today'=>$now));
+        $theater_movie_row = $prepare_select_theater_movie->fetchAll(PDO::FETCH_ASSOC);
+
+        //nab theater id's for movie lookups...
+        $theater_id[] = $theater_info['tid'];
 
         //if no results for a tid
         if(empty($theater_movie_row)){
 
             //do an api search on just that theater, pull theater info and movie times
-            $movie_search_api = get_movie_search_api(NULL,NULL,$theater_info['tid']);
+            $theater_search_api = get_movie_search_api(NULL,NULL,$theater_info['tid']);
 
-            //save this info for the app
-            $theater_movie_row = $movie_search_api['theater'][$theater_info['tid']];
+            $theater_movie_row = $theater_search_api['theater'][$theater_info['tid']];
 
-            //add
-            $insert_theater_movie = "INSERT INTO theater_movie (tid_mid,tid, mid, date, time) VALUES (:tid_mid,:tid, :mid, :date, :time);";
+            foreach($theater_movie_row["movie"] as $mid => $movie_info){
 
-            $prepare_theater_movie = $dbh->prepare($query_theater_movie);
+                    foreach($movie_info['time'] as $key => $single_time){
 
-            //$this->resp['theater'][$tid]['movies'][$mid]['time'][$k]
-            foreach($theater_movie_row["movies"] as $mid => $movie_info){
-                foreach($movie_info['time'] as $key => $single_time){
-                    
-					$prepare_theater_movie->bindParam(':tid_mid',$theater_info['tid'].'-'.$mid);
-					$prepare_theater_movie->bindParam(':tid',$theater_info['tid']);
-					$prepare_theater_movie->bindParam(':mid',$mid);
-					$prepare_theater_movie->bindParam(':date',date('now'));
-					$prepare_theater_movie->bindParam(':time',$single_time);					
-                    $prepare_theater_movie->execute();
-                }
+                        $prepare_insert_theater_movie->bindParam(':tid',$theater_info['tid']);
+                        $prepare_insert_theater_movie->bindParam(':mid',$mid);
+                        $prepare_insert_theater_movie->bindParam(':now',$now);
+                        $prepare_insert_theater_movie->bindParam(':play_time',$single_time);
+
+                        $prepare_insert_theater_movie->execute();
+                    }
             }
 
-                //insert into $table (field, value) values (:name, :value) on duplicate key update value=:value2
+            $theater_movie_db['theater'][$theater_info['tid']] = $theater_movie_row;
 
         }
-        //we got results based on the tid
+        //we have results based on the theater - the data will need to be massaged before we send it back
         else{
-			//foreach($theater_movie_row as 
-			
-            //need_update($theater_info['date'],24);
+
+            $theater_movie_db['theater'][$theater_info['tid']] = $theater_info;
+
+            foreach($theater_movie_row as $theater_movie_time){
+                $theater_movie_db['theater'][$theater_info['tid']]['movie'][$theater_movie_time['mid']]['time'][] = array('time'=>$theater_movie_time['time'],'date'=>$theater_movie_time['date']);
+            }
 
         }
 
-        $theater_movie[] = $theater_movie_row;
+
     }
 
+
+
+
+    //MOVIE
+
+    //Only the movies playing in theaters around us right now (using id's pulled from the last group of searches)
+    $query_movie_prep = "SELECT DISTINCT mid FROM theater_movie WHERE tid IN ('".implode('\',\'',$theater_id)."')";
+
+    $prepare_select_movie_prep = $dbh->query($query_movie_prep)->fetchAll(PDO::FETCH_ASSOC);
+
+    $query_movie = "SELECT mid, name FROM movie WHERE mid = :mid";
+    $prepare_select_movie = $dbh->prepare($query_movie);
+
+    //insert theater-movie
+    $insert_movie = "INSERT INTO movie (mid, name, image, length, rating, genre, director, actors, synopsis) VALUES
+    (:mid,:movie_name, :image, :length, :rating, :genre, :director, :actors, :synopsis);";
+    $prepare_insert_movie = $dbh->prepare($insert_movie);
+
+    //for every movie id brought up from our DB search
+    foreach($prepare_select_movie_prep as $movie_info){
+
+        //get the info on movies based on the movie id
+        $prepare_select_movie->execute(array(':mid'=>$movie_info['mid']));
+        $movie_row = $prepare_select_movie->fetchAll(PDO::FETCH_ASSOC);
+
+        //if no results for a movie
+        if(empty($movie_row)){
+
+            //do an api search on just that theater, pull theater info and movie times
+            $movie_search_api = get_movie_search_api(NULL,$movie_info['mid'],NULL);
+
+            if(!empty($movie_search_api)){
+
+                $movie_row = $movie_search_api['movie'][$movie_info['mid']];
+
+                $prepare_insert_movie->bindParam(':mid',$movie_info['mid']);
+                $prepare_insert_movie->bindParam(':movie_name',$movie_search_api['movie'][$movie_info['mid']]['name']);
+                $prepare_insert_movie->bindParam(':image',$movie_search_api['movie'][$movie_info['mid']]['image']);
+                $prepare_insert_movie->bindParam(':length',$movie_search_api['movie'][$movie_info['mid']]['length']);
+                $prepare_insert_movie->bindParam(':rating',$movie_search_api['movie'][$movie_info['mid']]['rating']);
+                $prepare_insert_movie->bindParam(':genre',$movie_search_api['movie'][$movie_info['mid']]['genre']);
+                $prepare_insert_movie->bindParam(':director',$movie_search_api['movie'][$movie_info['mid']]['director']);
+                $prepare_insert_movie->bindParam(':actors',$movie_search_api['movie'][$movie_info['mid']]['actors']);
+                $prepare_insert_movie->bindParam(':synopsis',$movie_search_api['movie'][$movie_info['mid']]['synopsis']);
+
+                $prepare_insert_movie->execute();
+
+                $theater_movie_db['movie'][$movie_info['mid']] = $movie_row;
+            }
+            else{
+                //look into why api returns nothing on a movie lookup...
+            }
+        }
+        //we get results back, just need to format the data before sending it back
+        else{
+            $theater_movie_db['movies'][$movie_info['mid']] = $movie_info;
+        }
+    }
+    
+    $dbh = null;
+
     echo "<hr/><pre>";
-    var_dump($theater_movie);
+    var_dump($theater_movie_db);
     echo "</pre>";
 
     return $theater_search_db;
